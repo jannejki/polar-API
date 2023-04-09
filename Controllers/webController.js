@@ -33,7 +33,7 @@ const webController = {
                     req.session.save(function (err) {
                         if (err) next(err)
                         console.log('session saved');
-                        res.redirect("http://localhost:3000");
+                        res.redirect(process.env.API_HOME);
                     })
                 })
             } else {
