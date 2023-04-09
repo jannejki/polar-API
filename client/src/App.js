@@ -4,7 +4,7 @@ import Axios from "axios";
 import Chart from "./LineChart";
 
 function App() {
-
+  const API_URL = "http://152.70.178.116:3000";
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [polarData, setPolarData] = useState([]);
@@ -18,7 +18,7 @@ function App() {
         password: loginPassword,
       },
       withCredentials: true,
-      url: "http://localhost:5000/login",
+      url: `${API_URL}/login`,
     }).then((res) => console.log(res));
   };
 
@@ -28,7 +28,7 @@ function App() {
       const rsp = await Axios({
         method: "GET",
         withCredentials: true,
-        url: "http://localhost:5000/data",
+        url: `${API_URL}/data`,
       });
       if (rsp.status === 200) setPolarData(rsp.data);
     } catch (error) {

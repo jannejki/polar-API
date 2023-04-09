@@ -17,16 +17,16 @@ const app = express();
 
     try {
         /* Configure Express */
-        app.set('port', process.env.PORT || 5000);
+        app.set('port', process.env.PORT || 3000);
         app.use(
             cors({
-                origin: "http://localhost:3000", // <-- location of the react app were connecting to
+                origin: process.env.API_HOME, // <-- location of the react app were connecting to
                 credentials: true,
             })
         );
 
         app.use(session({
-            secret: 'kaalilaatikko',
+            secret: process.env.SESSION_SECRET,
             resave: false,
             saveUninitialized: true,
             cookie: { secure: false }
