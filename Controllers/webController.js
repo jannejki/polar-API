@@ -54,7 +54,6 @@ const webController = {
         const userInfo = await polarModel.userInfo(accessObject);
         const nightlyRecharge = await polarModel.nightlyRecharge(accessObject);
          
-        
         res.send(nightlyRecharge);
     }
 };
