@@ -4,7 +4,7 @@ import Axios from "axios";
 import Chart from "./LineChart";
 
 function App() {
-  const API_URL = "http://152.70.178.116:3000";
+  const API_URL = "https://jannejki.ddns.net";
   const [loginUsername, setLoginUsername] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [polarData, setPolarData] = useState([]);
@@ -23,7 +23,7 @@ function App() {
   };
 
   const getUser = async () => {
-
+    console.log("Getting data from: ", API_URL);
     try {
       const rsp = await Axios({
         method: "GET",
@@ -32,7 +32,7 @@ function App() {
       });
       if (rsp.status === 200) setPolarData(rsp.data);
     } catch (error) {
-      alert(error.response.status+ " " + error.response.statusText);
+      alert(error.response.status + " " + error.response.statusText);
     }
   };
 
@@ -44,7 +44,6 @@ function App() {
       <div>
         <a href="https://flow.polar.com/oauth2/authorization?response_type=code&client_id=642a3448-e7fc-4dff-9ef6-f0701ccdee91">Polar login</a>
       </div>
-
 
       <button onClick={getUser}>Get data</button>
 

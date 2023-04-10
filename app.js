@@ -45,10 +45,12 @@ import webRouter from './Routes/webRoutes.js';
     try {
         app.use(
             cors({
-                origin: process.env.API_HOME, // <-- location of the react app were connecting to
+                origin: process.env.APP_HOME, // <-- location of the react app were connecting to
                 credentials: true,
             })
         );
+
+        app.set('trust proxy', true);
 
         app.use(session({
             secret: process.env.SESSION_SECRET,

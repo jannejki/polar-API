@@ -3,13 +3,16 @@
 /* import dependencies */
 import polarModel from '../Models/polarModel.js';
 import tokenModel from '../Models/tokenModel.js';
+import { saveIPAddress } from '../Utils/log.js';
 
 
 /* Web Controller */
 const webController = {
     index: (req, res) => {
         console.log('index');
-        res.redirect('localhost:3000');
+        console.log('Request coming from: ', req.ip);
+        saveIPAddress(req.ip);
+        res.redirect(process.env.APP_HOME);
     },
 
     login: (req, res) => {
@@ -33,11 +36,12 @@ const webController = {
                     req.session.save(function (err) {
                         if (err) next(err)
                         console.log('session saved');
-                        res.redirect(process.env.API_HOME);
+                        console.log('redirecting to ' + process.env.APP_HOME);
+                        res.redirect(process.env.APP_HOME);
                     })
                 })
             } else {
-                res.redirect(401, process.env.HOME);
+                res.redirect(401, process.env.APP_HOME);
             }
         } catch (error) {
             console.log(error);
@@ -46,6 +50,7 @@ const webController = {
     },
 
     data: async (req, res) => {
+
         // get cookies from req
         const user = req.session.user;
 
@@ -53,7 +58,7 @@ const webController = {
         const accessObject = await tokenModel.getToken(user);
         const userInfo = await polarModel.userInfo(accessObject);
         const nightlyRecharge = await polarModel.nightlyRecharge(accessObject);
-         
+
         res.send(nightlyRecharge);
     }
 };
