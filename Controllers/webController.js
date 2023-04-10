@@ -10,8 +10,6 @@ import { saveIPAddress } from '../Utils/log.js';
 const webController = {
     index: (req, res) => {
         console.log('index');
-        console.log('Request coming from: ', req.ip);
-        saveIPAddress(req.ip);
         res.redirect(process.env.APP_HOME);
     },
 
@@ -23,7 +21,7 @@ const webController = {
         try {
             const authCode = req.query.code;
             const accessObject = await polarModel.getAccessToken(authCode);
-
+            
             if (accessObject) {
                 accessObject.expire_date = tokenModel.generateExpireDate(accessObject);
                 await tokenModel.saveToken(accessObject);

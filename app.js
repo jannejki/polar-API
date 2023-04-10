@@ -10,6 +10,8 @@ import https from 'https';
 import http from 'http';
 
 import webRouter from './Routes/webRoutes.js';
+import { saveIPAddress } from './Utils/log.js';
+import whitelist from './Utils/whiteList.js';
 
 
 /* Start Express */
@@ -43,14 +45,17 @@ import webRouter from './Routes/webRoutes.js';
 
     /* Configure Express */
     try {
-        app.use(
-            cors({
-                origin: process.env.APP_HOME, // <-- location of the react app were connecting to
-                credentials: true,
-            })
-        );
 
-        app.set('trust proxy', true);
+        const corsOptionsDelegate = (req, callback) => {
+            let corsOptions;
+            console.log('header origin: ', req.header('Origin'));
+            if (whitelist.indexOf(req.header('Origin')) !== -1) {
+                corsOptions = { origin: true }
+            } else {
+                corsOptions = { origin: false }
+            }
+            callback(null, corsOptions)
+        }
 
         app.use(session({
             secret: process.env.SESSION_SECRET,
@@ -60,7 +65,7 @@ import webRouter from './Routes/webRoutes.js';
         }))
 
         /* Routes */
-        app.use('/', webRouter);
+        app.use('/', cors(corsOptionsDelegate), saveIPAddress, webRouter);
 
 
     } catch (error) {
