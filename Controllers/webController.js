@@ -3,7 +3,6 @@
 /* import dependencies */
 import polarModel from '../Models/polarModel.js';
 import tokenModel from '../Models/tokenModel.js';
-import { saveIPAddress } from '../Utils/log.js';
 
 
 /* Web Controller */
@@ -14,14 +13,16 @@ const webController = {
     },
 
     login: (req, res) => {
-        res.redirect('https://flow.polar.com/oauth2/authorization?response_type=code&client_id=642a3448-e7fc-4dff-9ef6-f0701ccdee91');
+        const clientID = process.env.NODE_ENV === 'PRODUCTION' ? process.env.PROD_CLIENT_ID : process.env.DEV_CLIENT_ID;
+        res.redirect(`https://flow.polar.com/oauth2/authorization?response_type=code&client_id=${clientID}`);
     },
 
     oauthCallback: async (req, res) => {
         try {
             const authCode = req.query.code;
             const accessObject = await polarModel.getAccessToken(authCode);
-            
+            const APP_HOME = process.env.NODE_ENV === 'DEVELOPMENT' ? process.env.PROD_APP_HOME : process.env.DEV_APP_HOME;
+
             if (accessObject) {
                 accessObject.expire_date = tokenModel.generateExpireDate(accessObject);
                 await tokenModel.saveToken(accessObject);
@@ -34,12 +35,12 @@ const webController = {
                     req.session.save(function (err) {
                         if (err) next(err)
                         console.log('session saved');
-                        console.log('redirecting to ' + process.env.APP_HOME);
-                        res.redirect(process.env.APP_HOME);
+                        console.log('redirecting to ' + APP_HOME);
+                        res.redirect(APP_HOME);
                     })
                 })
             } else {
-                res.redirect(401, process.env.APP_HOME);
+                res.redirect(401, APP_HOME);
             }
         } catch (error) {
             console.log(error);
@@ -48,16 +49,18 @@ const webController = {
     },
 
     data: async (req, res) => {
+        try {
 
-        // get cookies from req
-        const user = req.session.user;
-
-        // get access token from db
-        const accessObject = await tokenModel.getToken(user);
-        const userInfo = await polarModel.userInfo(accessObject);
-        const nightlyRecharge = await polarModel.nightlyRecharge(accessObject);
-
-        res.send(nightlyRecharge);
+            // get cookies from req
+            const user = req.session.user;
+            const accessObject = await tokenModel.getToken(user);
+            const nightlyRecharge = await polarModel.nightlyRecharge(accessObject);
+            res.send(nightlyRecharge);
+        } catch (error) {
+            console.trace();
+            console.log(error);
+            res.status(500).send('Internal Server Error');
+        }
     }
 };
 

@@ -46,16 +46,12 @@ import whitelist from './Utils/whiteList.js';
     /* Configure Express */
     try {
 
-        const corsOptionsDelegate = (req, callback) => {
-            let corsOptions;
-            console.log('header origin: ', req.header('Origin'));
-            if (whitelist.indexOf(req.header('Origin')) !== -1) {
-                corsOptions = { origin: true }
-            } else {
-                corsOptions = { origin: false }
-            }
-            callback(null, corsOptions)
-        }
+        app.use(
+            cors({
+                origin: whitelist, // <-- location of the react app were connecting to
+                credentials: true,
+            })
+        );
 
         app.use(session({
             secret: process.env.SESSION_SECRET,
@@ -65,7 +61,7 @@ import whitelist from './Utils/whiteList.js';
         }))
 
         /* Routes */
-        app.use('/', cors(corsOptionsDelegate), saveIPAddress, webRouter);
+        app.use('/', saveIPAddress, webRouter);
 
 
     } catch (error) {
