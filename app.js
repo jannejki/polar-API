@@ -11,24 +11,26 @@ import http from 'http';
 
 import webRouter from './Routes/webRoutes.js';
 
-/* Initialize required variables */
-dotenv.config();
-const app = express();
-
-const sslkey = fs.readFileSync('./sertificates/privateKey.pem', 'utf8');
-const sslcert = fs.readFileSync('./sertificates/sert.pem', 'utf8');
-const options = {
-    key: sslkey,
-    cert: sslcert
-};
-
-let HTTP_PORT;
-let HTTPS_PORT;
-let DOMAIN_NAME;
-
 
 /* Start Express */
 (async () => {
+
+    /* Initialize required variables */
+    dotenv.config();
+    const app = express();
+
+    const sslkey = fs.readFileSync(process.env.KEY_PATH, 'utf8');
+    const sslcert = fs.readFileSync(process.env.SERT_PATH, 'utf8');
+
+    const options = {
+        key: sslkey,
+        cert: sslcert
+    };
+
+    let HTTP_PORT;
+    let HTTPS_PORT;
+    let DOMAIN_NAME;
+
     if (process.env.NODE_ENV === 'PRODUCTION') {
         HTTP_PORT = process.env.PROD_HTTP;
         HTTPS_PORT = process.env.PROD_HTTPS;
@@ -39,8 +41,8 @@ let DOMAIN_NAME;
         DOMAIN_NAME = process.env.DEV_DOMAIN || 'localhost';
     }
 
+    /* Configure Express */
     try {
-        /* Configure Express */
         app.use(
             cors({
                 origin: process.env.API_HOME, // <-- location of the react app were connecting to
