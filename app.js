@@ -8,7 +8,6 @@ import cors from 'cors';
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
-import cookieParser from 'cookie-parser';
 
 import webRouter from './Routes/webRoutes.js';
 import { saveIPAddress } from './Utils/log.js';
@@ -80,7 +79,7 @@ import whitelist from './Utils/whiteList.js';
     } finally {
 
         switch (process.env.NODE_ENV) {
-            case 'DEVELOPMENT':
+            case 'PRODUCTION':
                 https.createServer(options, app).listen(HTTPS_PORT, () => console.log('HTTPS server running on port ' + HTTPS_PORT));
 
                 http.createServer((req, res) => {
