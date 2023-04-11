@@ -8,6 +8,7 @@ import cors from 'cors';
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
+import cookieParser from 'cookie-parser';
 
 import webRouter from './Routes/webRoutes.js';
 import { saveIPAddress } from './Utils/log.js';
@@ -48,7 +49,7 @@ import whitelist from './Utils/whiteList.js';
 
         app.use(
             cors({
-                origin: whitelist, // <-- location of the react app were connecting to
+                origin: whitelist,
                 credentials: true,
             })
         );
@@ -57,9 +58,14 @@ import whitelist from './Utils/whiteList.js';
             secret: process.env.SESSION_SECRET,
             resave: false,
             saveUninitialized: true,
-            cookie: { secure: false }
+            cookie: {
+                httpOnly: true,
+                sameSite: 'none',
+                secure: true,
+            }
         }))
 
+        app.use(cookieParser());
         /* Routes */
         app.use('/', saveIPAddress, webRouter);
 
@@ -73,16 +79,25 @@ import whitelist from './Utils/whiteList.js';
 
     } finally {
 
-        https.createServer(options, app).listen(HTTPS_PORT, () => {
-            console.log('HTTPS server running on port ' + HTTPS_PORT);
-        });
+        switch (process.env.NODE_ENV) {
+            case 'DEVELOPMENT':
+                https.createServer(options, app).listen(HTTPS_PORT, () => console.log('HTTPS server running on port ' + HTTPS_PORT));
 
-        http.createServer((req, res) => {
-            const redirectUrl = `https://${DOMAIN_NAME}:${HTTPS_PORT}${req.url}`;
-            res.writeHead(301, { 'Location': redirectUrl });
-            res.end();
-        }).listen(HTTP_PORT, () => {
-            console.log(`HTTP port ${HTTP_PORT} redirecting traffic to ${DOMAIN_NAME}:${HTTPS_PORT}`);
-        });
+                http.createServer((req, res) => {
+                    console.log('http request');
+                    const redirectUrl = `https://${DOMAIN_NAME}:${HTTPS_PORT}${req.url}`;
+
+                    res.writeHead(301, { 'Location': redirectUrl });
+                    res.end();
+                }).listen(HTTP_PORT, () => {
+                    console.log(`HTTP port ${HTTP_PORT} redirecting traffic to ${DOMAIN_NAME}:${HTTPS_PORT}`);
+                });
+                break;
+
+            default:
+                https.createServer(options, app).listen(HTTPS_PORT, () => console.log('HTTPS server running on port ' + HTTPS_PORT));
+                http.createServer(app).listen(HTTP_PORT, () => console.log('HTTP server running on port ' + HTTP_PORT));
+                break;
+        }
     }
 })();

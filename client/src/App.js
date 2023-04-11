@@ -3,11 +3,8 @@ import "./App.css";
 import Axios from "axios";
 import Chart from "./LineChart";
 
-const DEV_API_URL= 'https://localhost:5001';
-const DEV_CLIENT_ID= '65ef5498-dc96-4383-bda7-0ce53662bbcb';
-
-const PROD_API_URL= 'https://jannejki.ddns.net';
-const PROD_CLIENT_ID= '642a3448-e7fc-4dff-9ef6-f0701ccdee91';
+const DEV_API_URL = 'https://localhost:5001';
+const PROD_API_URL = 'https://jannejki.ddns.net';
 
 function App() {
   const [loginUsername, setLoginUsername] = useState("");
@@ -20,14 +17,14 @@ function App() {
     switch (process.env.NODE_ENV) {
       case 'production':
         setAPI_URL(PROD_API_URL);
-        setClientID(PROD_CLIENT_ID);
         break;
       case 'development':
         setAPI_URL(DEV_API_URL);
-        setClientID(PROD_CLIENT_ID);
         break;
     }
-    console.log({API_URL, clientID});
+    
+    setClientID('642a3448-e7fc-4dff-9ef6-f0701ccdee91');
+    console.log({ API_URL, clientID });
   }, []);
 
   const login = () => {
@@ -52,13 +49,13 @@ function App() {
       });
       if (rsp.status === 200) setPolarData(rsp.data);
     } catch (error) {
-      alert(error.response.status + " " + error.response.statusText);
+      alert(error.response.status + " " + error.response.data);
     }
   };
 
   return (
     <div className="App">
-      <h1>hello world</h1>
+      {process.env.NODE_ENV == 'development' ? <h1>dev</h1> : null}
       <div>
         <a href={`https://flow.polar.com/oauth2/authorization?response_type=code&client_id=${clientID}`}>Polar login</a>
       </div>

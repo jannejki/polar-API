@@ -8,19 +8,14 @@ const polarModel = {
 
     getAccessToken: async (authToken) => {
 
-        const clientID = process.env.NODE_ENV === 'PRODUCTION' ? process.env.PROD_CLIENT_ID : process.env.DEV_CLIENT_ID ;
-        const clientSecret = process.env.NODE_ENV === 'PRODUCTION' ? process.env.PROD_CLIENT_SECRET : process.env.DEV_CLIENT_SECRET;
-
         const inputBody = {
             'grant_type': 'authorization_code',
             'code': authToken,
         }
 
-        let credentials = `${clientID}:${clientSecret}`;
+        let credentials = `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`;
         let buff = new Buffer(credentials);
         let encodedAuth = buff.toString('base64');
-
-        console.log('getAccesToken: ', {credentials});
 
         const headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -34,7 +29,6 @@ const polarModel = {
             body: new URLSearchParams(inputBody)
         });
 
-        console.log('getAccessToken status: ', rsp.status);
         const accessObject = await rsp.json();
         return accessObject;
     },
@@ -51,7 +45,6 @@ const polarModel = {
             method: 'GET',
             headers: headers
         });
-        console.log('userInfo status: ', rsp.status);
         const data = await rsp.json();
         return data;
     },
@@ -67,7 +60,6 @@ const polarModel = {
             method: 'GET',
             headers: headers
         });
-        console.log('nightlyRecharge status: ', rsp.status);
         const data = await rsp.json();
         return data;
     }
