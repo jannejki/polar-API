@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
+:root {
+  --blue: #1f8fff;
+  --red: #E2002B;
+  --grey: #595457;
+}
+
+body {
+  margin: 0 !important;
+  font-family: 'Roboto Mono', monospace;
+} 
+
+.App {
+  text-align: center;
+  width: 100%;
+  height: 100vh;
+  background-image: url("../images/backgoround.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position-y: bottom;
+
+}
+
+footer {
+  position: relative;
+  display: flex;
+  margin-top: 3.66vh;
+  padding: 3.66vh 0;
+  height: 11vh;
+  width: 100%;
+  background-color: var(--blue);
+  bottom: 0;
+}
+
+footer div {
+  margin: auto;
+}
+
+footer p {
+  margin: 1.2vh 0;
+}
+
+h1 {
+  color: #E2002B;
+}
+
+.devBar {
+  width: '100%';
+  background-color: var(--grey);
+  margin-bottom: 1em;
+}

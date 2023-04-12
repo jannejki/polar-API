@@ -64,7 +64,6 @@ import whitelist from './Utils/whiteList.js';
             }
         }))
 
-        app.use(cookieParser());
         /* Routes */
         app.use('/', saveIPAddress, webRouter);
 

@@ -11,6 +11,7 @@ function NightlyRecharge() {
   }
   
   useEffect(() => {
+    console.log("nightlyProps: ");
     getNightlyData();
   }, []);
 

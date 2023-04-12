@@ -33,7 +33,7 @@ const webController = {
 
                     req.session.save(function (err) {
                         if (err) next(err)
-                        res.sendStatus(204);
+                        res.redirect(APP_HOME+"/?access=granted");
                     })
                 })
             } else {
