@@ -9,18 +9,17 @@
 body {
   margin: 0 !important;
   font-family: 'Roboto Mono', monospace;
-} 
+  background-image: url("../images/backgoround2.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position-y: bottom;
+}
 
 .App {
   text-align: center;
   width: 100%;
   height: 100vh;
-  background-image: url("../images/backgoround.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position-y: bottom;
-
 }
 
 footer {

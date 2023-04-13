@@ -8,6 +8,7 @@ import cors from 'cors';
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
+import cookieParser from 'cookie-parser';
 
 import webRouter from './Routes/webRoutes.js';
 import { saveIPAddress } from './Utils/log.js';
@@ -56,13 +57,17 @@ import whitelist from './Utils/whiteList.js';
         app.use(session({
             secret: process.env.SESSION_SECRET,
             resave: false,
-            saveUninitialized: true,
+            saveUninitialized: false,
             cookie: {
                 httpOnly: true,
                 sameSite: 'none',
                 secure: true,
             }
         }))
+
+        // set app to read post body
+        app.use(express.json());
+        app.use(express.urlencoded({ extended: true }));
 
         /* Routes */
         app.use('/', saveIPAddress, webRouter);

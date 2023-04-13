@@ -33,11 +33,11 @@ const webController = {
 
                     req.session.save(function (err) {
                         if (err) next(err)
-                        res.redirect(APP_HOME+"/?access=granted");
+                        res.json({ x_user_id:accessObject.x_user_id });
                     })
                 })
             } else {
-                res.redirect(401, APP_HOME);
+                res.redirect(401, APP_HOME +'/login');
             }
         } catch (error) {
             console.log("oauthCallback: ", error);
@@ -47,10 +47,10 @@ const webController = {
 
     data: async (req, res) => {
         try {
-            // get cookies from req
             const user = req.session.user;
             const accessObject = await tokenModel.getToken(user);
             const nightlyRecharge = await polarModel.nightlyRecharge(accessObject);
+            
             res.send(nightlyRecharge);
         } catch (error) {
             console.log("data: ", error);

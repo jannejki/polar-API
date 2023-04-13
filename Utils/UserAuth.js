@@ -3,7 +3,8 @@ const checkAuthentication = (req, res, next) => {
         next();
     }
     else {
-        console.log('NO SESSION FOUND: , ', req.session);
+        console.log('Not authorized! session: , ', req.session);
+        console.log('Not authorized! User: , ', req.session.user);
         res.status(401).send('Unauthorized, no session found');
     }
 };
