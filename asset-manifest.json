@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/polar-API/static/css/main.8eec286c.css",
-    "main.js": "/polar-API/static/js/main.b22950cc.js",
-    "static/js/787.c4e7f8f9.chunk.js": "/polar-API/static/js/787.c4e7f8f9.chunk.js",
-    "index.html": "/polar-API/index.html",
-    "main.8eec286c.css.map": "/polar-API/static/css/main.8eec286c.css.map",
-    "main.b22950cc.js.map": "/polar-API/static/js/main.b22950cc.js.map",
-    "787.c4e7f8f9.chunk.js.map": "/polar-API/static/js/787.c4e7f8f9.chunk.js.map"
+    "main.css": "/static/css/main.3c10404b.css",
+    "main.js": "/static/js/main.fbd4c550.js",
+    "static/js/787.c4e7f8f9.chunk.js": "/static/js/787.c4e7f8f9.chunk.js",
+    "static/media/backgoround2.png": "/static/media/backgoround2.5dacb77ec5f003de2e58.png",
+    "index.html": "/index.html",
+    "main.3c10404b.css.map": "/static/css/main.3c10404b.css.map",
+    "main.fbd4c550.js.map": "/static/js/main.fbd4c550.js.map",
+    "787.c4e7f8f9.chunk.js.map": "/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8eec286c.css",
-    "static/js/main.b22950cc.js"
+    "static/css/main.3c10404b.css",
+    "static/js/main.fbd4c550.js"
   ]
 }
