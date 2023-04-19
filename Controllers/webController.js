@@ -1,19 +1,14 @@
 'use strict'
-
-/* import dependencies */
+/*===============================*/
+/*     Import dependencies       */
+/*===============================*/
 import polarModel from '../Models/polarModel.js';
 import tokenModel from '../Models/tokenModel.js';
 
-
-/* Web Controller */
 const webController = {
     index: (req, res) => {
         console.log('index');
-        res.redirect(process.env.APP_HOME);
-    },
-
-    login: (req, res) => {
-        res.redirect(`https://flow.polar.com/oauth2/authorization?response_type=code&client_id=${process.env.CLIENT_ID}`);
+        res.send('index');
     },
 
     oauthCallback: async (req, res) => {
@@ -33,30 +28,17 @@ const webController = {
 
                     req.session.save(function (err) {
                         if (err) next(err)
-                        res.json({ x_user_id:accessObject.x_user_id });
+                        res.json({ x_user_id: accessObject.x_user_id });
                     })
                 })
             } else {
-                res.redirect(401, APP_HOME +'/login');
+                res.redirect(401, APP_HOME + '/login');
             }
         } catch (error) {
             console.log("oauthCallback: ", error);
             res.status(500).send('Internal Server Error');
         }
     },
-
-    data: async (req, res) => {
-        try {
-            const user = req.session.user;
-            const accessObject = await tokenModel.getToken(user);
-            const nightlyRecharge = await polarModel.nightlyRecharge(accessObject);
-            
-            res.send(nightlyRecharge);
-        } catch (error) {
-            console.log("data: ", error);
-            res.status(500).send('Internal Server Error');
-        }
-    }
 };
 
 export default webController;

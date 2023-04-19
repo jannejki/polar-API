@@ -1,6 +1,8 @@
 'use strict'
 
-/* Import dependencies*/
+/*===============================*/
+/*     Import dependencies       */
+/*===============================*/
 import dotenv from 'dotenv';
 import express from 'express';
 import session from 'express-session';
@@ -8,17 +10,14 @@ import cors from 'cors';
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
-import cookieParser from 'cookie-parser';
-
 import webRouter from './Routes/webRoutes.js';
-import { saveIPAddress } from './Utils/log.js';
 import whitelist from './Utils/whiteList.js';
 
 
-/* Start Express */
 (async () => {
-
-    /* Initialize required variables */
+    /*===============================*/
+    /*     Configure environment     */
+    /*===============================*/
     dotenv.config();
     const app = express();
 
@@ -44,37 +43,23 @@ import whitelist from './Utils/whiteList.js';
         DOMAIN_NAME = process.env.DEV_DOMAIN || 'localhost';
     }
 
-    /* Configure Express */
     try {
-
-        app.use(
-            cors({
-                origin: whitelist,
-                credentials: true,
-            })
-        );
-
-        app.use(session({
-            secret: process.env.SESSION_SECRET,
-            resave: false,
-            saveUninitialized: false,
-            cookie: {
-                httpOnly: true,
-                sameSite: 'none',
-                secure: true,
-            }
-        }))
-
-        // set app to read post body
+        /*===============================*/
+        /*     Configure express         */
+        /*===============================*/
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
 
         /* Routes */
-        app.use('/', saveIPAddress, webRouter);
+        app.use('/api', webRouter);
+
+        /* Handle 404 requests */
+        app.use('*', (req, res) => {
+            res.status(404).send('Not Found');
+        })
 
 
     } catch (error) {
-        /* Error handling */
         app.use((req, res) => {
             console.log(error);
             res.status(500).send('Internal Server Error');
@@ -82,6 +67,9 @@ import whitelist from './Utils/whiteList.js';
 
     } finally {
 
+        /*===============================*/
+        /*        Start server           */
+        /*===============================*/
         switch (process.env.NODE_ENV) {
             case 'PRODUCTION':
                 https.createServer(options, app).listen(HTTPS_PORT, () => console.log('HTTPS server running on port ' + HTTPS_PORT));
@@ -98,6 +86,7 @@ import whitelist from './Utils/whiteList.js';
                 break;
 
             default:
+                /* Development */
                 https.createServer(options, app).listen(HTTPS_PORT, () => console.log('HTTPS server running on port ' + HTTPS_PORT));
                 http.createServer(app).listen(HTTP_PORT, () => console.log('HTTP server running on port ' + HTTP_PORT));
                 break;
