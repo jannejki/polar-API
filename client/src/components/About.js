@@ -1,19 +1,17 @@
-import React, { useEffect, useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import Navigation from '../components/Navigation';
+import { useContext } from "react";
 import AuthContext from "../context/AuthProvider";
+import { Link } from 'react-router-dom';
 
 function About() {
-    const { setAuth } = useContext(AuthContext);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        console.log('about');
-    });
+    const { auth } = useContext(AuthContext);
 
     return (
         <section>
-            <Link to="/">Home</Link><br></br>
-            <Link to="/NightlyRecharge">Nightly recharge</Link>
+            {auth.user
+                ? <Navigation />
+                : <Link to="/login">Login</Link>
+            }
             <h1>About</h1>
             <p>This page is free for all</p>
         </section>

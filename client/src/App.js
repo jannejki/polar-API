@@ -3,20 +3,18 @@ import "./css/App.css";
 
 import { Routes, Route } from "react-router-dom";
 
-import Login from "./components/Login";
-import Layout from "./components/Layout";
-import Unauthorized from "./components/Unauthorized";
+import Login from "./pages/Login";
+import Layout from "./pages/Layout";
 import RequireAuth from "./components/RequireAuth";
-import Missing from "./components/Missing";
+import Missing from "./pages/Missing";
 import About from "./components/About";
-import NightlyRecharge from "./components/NightlyRecharge";
-import Home from "./components/Home";
+import NightlyRecharge from "./pages/NightlyRecharge";
+import Home from "./pages/Home";
 import Oauth_CB from "./components/Oauth_CB";
 
 function App() {
-
   useEffect(() => {
-    console.log('App.js useEffect');
+
   }, []);
 
   return (
@@ -24,7 +22,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* public routes */}
         <Route path="/login" element={<Login />} />
-        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/oauth_cb" element={<Oauth_CB />} />
         <Route path="/about" element={<About />} />
 
         {/* we want to protect these routes */}

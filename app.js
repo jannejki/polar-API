@@ -12,7 +12,7 @@ import https from 'https';
 import http from 'http';
 import webRouter from './Routes/webRoutes.js';
 import whitelist from './Utils/whiteList.js';
-
+import apiRouter from './Routes/apiRoutes.js';
 
 (async () => {
     /*===============================*/
@@ -50,8 +50,29 @@ import whitelist from './Utils/whiteList.js';
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
 
+        // app.use(cookieParser(process.env.COOKIE_SECRET, { httpOnly: true }));
+
+        app.use(session({
+            secret: 'secret',
+            resave: false,
+            saveUninitialized: true,
+            cookie: { secure: false }
+        }))
+
+        app.use(cors({
+            origin: (origin, callback) => {
+                if (whitelist.indexOf(origin) !== -1 || !origin) {
+                    callback(null, true);
+                } else {
+                    callback(new Error('Not allowed by CORS'));
+                }
+            },
+            credentials: true
+        }));
+
         /* Routes */
-        app.use('/api', webRouter);
+        app.use('/web', webRouter);
+        app.use('/api', apiRouter);
 
         /* Handle 404 requests */
         app.use('*', (req, res) => {

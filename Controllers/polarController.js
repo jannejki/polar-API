@@ -1,20 +1,25 @@
-const polarController = {
-    nightlyRecharge: async (req, res) => {
-        res.send('nightlyRecharge');
+import polarModel from "../Models/polarModel.js";
+import tokenModel from "../Models/tokenModel.js";
+import JWT from "../Utils/jwtCreator.js";
 
-        /* gets the access token from the database and uses it to call the polar API
-                try {
-                    const user = req.session.user;
-                    const accessObject = await tokenModel.getToken(user);
-                    const nightlyRecharge = await polarModel.nightlyRecharge(accessObject);
-        
-                    res.send(nightlyRecharge);
-                } catch (error) {
-                    console.log("data: ", error);
-                    res.status(500).send('Internal Server Error');
-                }
-        */
+const polarController = {
+    index: async (req, res) => {
+        res.json('index');
     },
+
+    nightlyRecharge: async (req, res) => {
+        const user = req.session.user;    
+        try {
+            const accessObject = await tokenModel.getToken(user);
+            const nightlyRecharge = await polarModel.nightlyRecharge(accessObject);
+ 
+            res.send(nightlyRecharge);
+        } catch (error) {
+            console.log('nightlyRecharge error');
+            res.status(500).send('Internal Server Error');
+        }
+ 
+},
 }
 
 export default polarController

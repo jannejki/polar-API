@@ -5,7 +5,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import '../App.js';
 import '../css/login.css'
 
-import axios from '../api/axios';
+import axios from '../api/axios.js';
 import useAuth from '../hooks/useAuth.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
@@ -21,12 +21,7 @@ function Login() {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
-
-    const userRef = useRef();
     const errRef = useRef();
-
-    const [user, setUser] = useState('');
-    const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
 
 
@@ -34,41 +29,18 @@ function Login() {
         // set timeout
         e.preventDefault();
         setLoading(true);
-        setTimeout(() => {
+        setTimeout(async () => {
             window.location.href = polarAuthLink;
         }, 1000);
     };
 
     useEffect(() => {
-        // print url query
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        // if code is present, send to server
-        if (code && !loading) {
-            polarLogin(code);
-        }
-    },);
+
+    });
 
     const handleLogin = (accessObject) => {
-        console.log(accessObject);
         setAuth({ user: accessObject.x_user_id });
-        setUser('');
-        setPwd('');
         navigate(from, { replace: true });
-    }
-
-    const polarLogin = async (code) => {
-        try {
-            setLoading(true);
-            const response = await axios.get(`/oauth2_callback?code=${code}`, {
-                headers: { 'Content-Type': 'application/json' },
-                withCredentials: true
-            });
-            console.log('response received from server');
-            handleLogin(response.data);
-        } catch (error) {
-            console.log('error: ', error);
-        }
     }
 
     const devLogin = async () => {
@@ -95,10 +67,6 @@ function Login() {
             errRef.current.focus();
         }
     }
-
-    useEffect(() => {
-        console.log('login');
-    });
 
     return (
         <div className='App' style={{ display: 'flex' }} >
