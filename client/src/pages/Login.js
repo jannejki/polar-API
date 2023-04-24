@@ -86,7 +86,7 @@ function Login() {
                                 <span>Log in with Polar account</span>
                             </LoadingButton>
                         </a>
-                        <a href='/about'><Button variant="contained">About</Button></a>
+                        <a href='/polar-API/about'><Button variant="contained">About</Button></a>
                         <a href='https://github.com/jannejki/polar-API'><Button variant="contained">Repository<GitHubIcon></GitHubIcon></Button></a>
                     </div>
                 </div>

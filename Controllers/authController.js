@@ -6,17 +6,17 @@ const authController = {
 
     oauthCallback: async (req, res) => {
         try {
+            console.log('oauthCallback');
             const authCode = req.query.code;
             const accessObject = await polarModel.getAccessToken(authCode);
             const APP_HOME = process.env.NODE_ENV === 'PRODUCTION' ? process.env.PROD_APP_HOME : process.env.DEV_APP_HOME;
 
             if (accessObject) {
                 accessObject.expire_date = tokenModel.generateExpireDate(accessObject);
-
                 await tokenModel.saveToken(accessObject);
-                
+
                 req.session.user = accessObject.x_user_id;
-                res.sendStatus(200);
+                res.redirect(APP_HOME);
             } else {
                 res.redirect(401, APP_HOME + '/login');
             }

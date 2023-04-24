@@ -6,6 +6,7 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState({});
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
@@ -30,9 +31,34 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    const polarLogin = async (code) => {
+        try {
+            console.log('polarLogin: ', code);
+            setLoading(true);
+            const response = await axios.get(`/web/oauth2_callback?code=${code}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                withCredentials: true
+            });
+
+            setLoading(false);
+
+            if (response.status === 200) {
+                // set cookie token to setAuth and navigate to home
+                setAuth({ user: true });
+                // navigate to home
+                window.location.href = '/polar-API';
+            }
+        } catch (error) {
+            // setError(error);
+            console.log(error);
+        } 
+    }
+
     return (
-        <AuthContext.Provider value={{ auth, setAuth, checkAuth }}>
-            {children}
+        <AuthContext.Provider value={{ auth, setAuth, checkAuth, polarLogin }}>
+            {loading ? <h1>Loading</h1> : children}
         </AuthContext.Provider>
     )
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./css/App.css";
 
 import { Routes, Route } from "react-router-dom";
@@ -11,10 +11,23 @@ import About from "./components/About";
 import NightlyRecharge from "./pages/NightlyRecharge";
 import Home from "./pages/Home";
 import Oauth_CB from "./components/Oauth_CB";
+import useAuth from "./hooks/useAuth";
 
 function App() {
-  useEffect(() => {
+  const { polarLogin } = useAuth();
 
+  useEffect(() => {
+    const url = window.location.href;
+    let code = url.split('=')[1] || '';
+    console.log(code);
+    // if code has a '#' in it, remove the '#' and everything after it
+    if (code.includes('#')) {
+      const codeArr = code.split('#');
+      code = codeArr[0];
+    }
+    if (code !== '') {
+      polarLogin(code);
+    }
   }, []);
 
   return (

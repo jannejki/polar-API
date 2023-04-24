@@ -13,7 +13,7 @@ function Oauth_CB() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname || "/polar-API";
 
 
     useEffect(() => {
