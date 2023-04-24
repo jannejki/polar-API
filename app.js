@@ -50,23 +50,20 @@ import apiRouter from './Routes/apiRoutes.js';
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
 
-        // app.use(cookieParser(process.env.COOKIE_SECRET, { httpOnly: true }));
-
         app.use(session({
             secret: 'secret',
             resave: false,
             saveUninitialized: true,
-            cookie: { secure: false }
+            cookie: {
+                httpOnly: true,
+                sameSite: 'none',
+                secure: true,
+            }
         }))
 
         app.use(cors({
-            origin: (origin, callback) => {
-                if (whitelist.indexOf(origin) !== -1 || !origin) {
-                    callback(null, true);
-                } else {
-                    callback(new Error('Not allowed by CORS'));
-                }
-            },
+            origin: whitelist,
+
             credentials: true
         }));
 
