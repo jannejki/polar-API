@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/polar-API/static/css/main.136b25fc.css",
-    "main.js": "/polar-API/static/js/main.825903b6.js",
+    "main.js": "/polar-API/static/js/main.c455d103.js",
     "static/js/787.c4e7f8f9.chunk.js": "/polar-API/static/js/787.c4e7f8f9.chunk.js",
     "static/media/backgoround2.png": "/polar-API/static/media/backgoround2.5dacb77ec5f003de2e58.png",
     "index.html": "/polar-API/index.html",
     "main.136b25fc.css.map": "/polar-API/static/css/main.136b25fc.css.map",
-    "main.825903b6.js.map": "/polar-API/static/js/main.825903b6.js.map",
+    "main.c455d103.js.map": "/polar-API/static/js/main.c455d103.js.map",
     "787.c4e7f8f9.chunk.js.map": "/polar-API/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.136b25fc.css",
-    "static/js/main.825903b6.js"
+    "static/js/main.c455d103.js"
   ]
 }
