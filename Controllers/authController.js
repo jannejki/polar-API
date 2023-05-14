@@ -14,7 +14,9 @@ const authController = {
             if (accessObject) {
                 accessObject.expire_date = tokenModel.generateExpireDate(accessObject);
                 await tokenModel.saveToken(accessObject);
-
+                // create a jwt token and send it to the client
+                const token = await JWT.create(accessObject);
+                res.cookie('token', token, { httpOnly: false, secure: false,  });
                 req.session.user = accessObject.x_user_id;
                 res.redirect(APP_HOME);
             } else {
