@@ -7,7 +7,6 @@ import tokenModel from '../Models/tokenModel.js';
 
 const webController = {
     index: (req, res) => {
-        console.log('index');
         res.send('index');
     },
 };

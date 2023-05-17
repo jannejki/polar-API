@@ -33,7 +33,6 @@ export const AuthProvider = ({ children }) => {
 
     const polarLogin = async (code) => {
         try {
-            console.log('polarLogin: ', code);
             setLoading(true);
             const response = await axios.get(`/web/oauth2_callback?code=${code}`, {
                 headers: {

@@ -3,14 +3,17 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 function Chart(props) {
     const [data, setData] = React.useState([]);
+    const [lines, setLines] = React.useState([]);
 
     useEffect(() => {
         setData(props.data);
+        setLines(props.lines);
     }, [props.data]);
+
 
     return (
         <div style={{ backgroundColor: 'white' }}>
-            <h2>ANS charge</h2>
+            <h2>{props.header}</h2>
             <ResponsiveContainer width="95%" height={400}>
                 <LineChart width={'100%'} height={'100%'} data={data}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -18,8 +21,11 @@ function Chart(props) {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="ans_charge" stroke="#8884d8" activeDot={{ r: 8 }} />
-                    <Line type="monotone" dataKey="ans_charge_status" stroke="#82ca9d" />
+
+                    {lines && lines.map((item, index) => {
+                        return <Line key={index} type="monotone" dataKey={item} stroke="#8884d8" activeDot={{ r: 8 }} />
+                    })}
+
                 </LineChart>
             </ResponsiveContainer>
         </div>

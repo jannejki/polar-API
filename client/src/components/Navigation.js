@@ -30,6 +30,7 @@ const Navigation = () => {
             <Link to="/">Home</Link><br></br>
             <Link to="/about">About</Link><br></br>
             <Link to="/NightlyRecharge">Nightly recharge</Link><br/>
+            <Link to="/cardioload">Cardio load</Link><br/>
             <button onClick={logout}>Logout</button>
         </div>
     );

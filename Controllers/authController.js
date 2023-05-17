@@ -5,8 +5,9 @@ import JWT from "../Utils/jwtCreator.js";
 const authController = {
 
     oauthCallback: async (req, res) => {
+  
         try {
-            console.log('oauthCallback');
+            const token = await JWT.create({x_user_id:"testi"});
             const authCode = req.query.code;
             const accessObject = await polarModel.getAccessToken(authCode);
             const APP_HOME = process.env.NODE_ENV === 'PRODUCTION' ? process.env.PROD_APP_HOME : process.env.DEV_APP_HOME;
@@ -15,8 +16,7 @@ const authController = {
                 accessObject.expire_date = tokenModel.generateExpireDate(accessObject);
                 await tokenModel.saveToken(accessObject);
                 // create a jwt token and send it to the client
-                const token = await JWT.create(accessObject);
-                res.cookie('token', token, { httpOnly: false, secure: false,  });
+
                 req.session.user = accessObject.x_user_id;
                 res.redirect(APP_HOME);
             } else {
@@ -29,7 +29,6 @@ const authController = {
     },
 
     auth: (req, res) => {
-        console.log('authenticating user: ', req.session.user);
         if (req.session.user) {
             res.status(200).send('/auth');
         } else {

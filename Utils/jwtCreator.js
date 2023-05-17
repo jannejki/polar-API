@@ -8,8 +8,6 @@ const JWT = {
     verify: async (token) => {
         try {
             const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-            console.log(new Date(decoded.exp * 1000).toLocaleString());
-            console.log('verify true');
             return true;
         } catch (error) {
             console.log('verify error');

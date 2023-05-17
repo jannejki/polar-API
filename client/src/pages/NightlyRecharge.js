@@ -6,6 +6,7 @@ import Navigation from '../components/Navigation';
 
 function NightlyRecharge() {
   const [data, setData] = React.useState(null);
+  const [lines, setLines] = React.useState([]);
 
 
   const getNightlyData = async () => {
@@ -13,7 +14,19 @@ function NightlyRecharge() {
       headers: { 'Content-Type': 'application/json' },
       withCredentials: true
     });
-    setData(response.data.recharges);
+
+    // going through the data and adding only wanted data to the array
+    const tmp = [];
+    response.data.recharges.forEach((item) => {
+      tmp.push({
+        ans_charge: item.ans_charge,
+        ans_charge_status: item.ans_charge_status,
+      });
+    });
+
+    const keys = Object.keys(tmp[0]);
+    setLines(keys);
+    setData(tmp);
   }
 
   useEffect(() => {
@@ -23,10 +36,10 @@ function NightlyRecharge() {
   return (
     <div>
 
-      <Navigation/>
+      <Navigation />
       <h1>NightlyRecharge</h1>
       <div style={{ width: '66%', margin: 'auto' }}>
-        <Chart data={data} />
+        <Chart data={data} lines={lines} header="ANS Charge" />
       </div>
     </div>
   )

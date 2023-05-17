@@ -34,7 +34,7 @@ const polarModel = {
     },
 
     userInfo: async (accessObject) => {
-        
+
         const headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json;',
@@ -62,7 +62,22 @@ const polarModel = {
         });
         const data = await rsp.json();
         return data;
-    }
+    },
+
+    cardioLoad: async (accessObject) => {
+        const headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json;',
+            'Authorization': `Bearer ${accessObject.access_token}`
+        }
+
+        const rsp = await fetch(`https://www.polaraccesslink.com/v3/users/cardio-load`, {
+            method: 'GET',
+            headers: headers
+        });
+        const data = await rsp.json();
+        return data;
+    },
 }
 
 export default polarModel;

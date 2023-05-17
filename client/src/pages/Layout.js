@@ -7,7 +7,6 @@ const authTester = async () => {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true
         });
-        console.log(response);
     } catch (error) {
         console.log(error);
     }

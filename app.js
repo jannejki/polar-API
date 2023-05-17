@@ -10,6 +10,7 @@ import cors from 'cors';
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
+import logger from './Utils/logger.js';
 import webRouter from './Routes/webRoutes.js';
 import whitelist from './Utils/whiteList.js';
 import apiRouter from './Routes/apiRoutes.js';
@@ -49,7 +50,8 @@ import apiRouter from './Routes/apiRoutes.js';
         /*===============================*/
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
-
+        app.use(logger);
+        
         app.use(session({
             secret: 'secret',
             resave: false,
@@ -66,6 +68,7 @@ import apiRouter from './Routes/apiRoutes.js';
 
             credentials: true
         }));
+        
 
         /* Routes */
         app.use('/web', webRouter);
