@@ -3,10 +3,9 @@ import Navigation from "../components/Navigation";
 const Home = () => {
 
     return (
-        <div>
-            <Navigation />
+        <section className="container">
             <h1>Home</h1>
-        </div>
+        </section>
     )
 }
 

@@ -71,7 +71,12 @@ const polarModel = {
             'Authorization': `Bearer ${accessObject.access_token}`
         }
 
-        const rsp = await fetch(`https://www.polaraccesslink.com/v3/users/cardio-load`, {
+        // setting query params for from and to dates, where date format is yyyy-mm-dd
+        // from date is current date, and to date is 28 days prior
+        const from = new Date().toISOString().slice(0, 10);
+        const to = new Date(new Date().setDate(new Date().getDate() - 28)).toISOString().slice(0, 10);
+        
+        const rsp = await fetch(`https://www.polaraccesslink.com/v3/users/cardio-load?from=${from}&to=${to}`, {
             method: 'GET',
             headers: headers
         });

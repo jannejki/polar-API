@@ -1,24 +1,15 @@
 import { Outlet } from "react-router-dom"
-import axios from "../api/axios";
-
-const authTester = async () => {
-    try {
-        const response = await axios.get('/web/auth', {
-            headers: { 'Content-Type': 'application/json' },
-            withCredentials: true
-        });
-    } catch (error) {
-        console.log(error);
-    }
-}
+import { useContext } from "react";
+import Navigation from "../components/Navigation";
+import AuthContext from "../context/AuthProvider";
 
 const Layout = () => {
+    const { auth } = useContext(AuthContext);
+
     return (
-        <main className="App">
-            {process.env.NODE_ENV === 'development'
-                ? <div>
-                    <button onClick={authTester}>auth tester</button>
-                </div>
+        <main className="App d-flex flex-column px-0">
+            {auth.user
+                ? <Navigation />
                 : null
             }
             <Outlet />

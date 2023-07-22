@@ -1,19 +1,13 @@
-import Navigation from '../components/Navigation';
-import { useContext } from "react";
-import AuthContext from "../context/AuthProvider";
-import { Link } from 'react-router-dom';
+import { useState } from "react";
 
 function About() {
-    const { auth } = useContext(AuthContext);
-
+    const [width, setWidth] = useState(window.innerWidth);
+    const [height, setHeight] = useState(window.innerHeight);
     return (
         <section>
-            {auth.user
-                ? <Navigation />
-                : <Link to="/login">Login</Link>
-            }
             <h1>About</h1>
             <p>This page is free for all</p>
+            <h1>Screen size is: {height} X {width} px</h1>
         </section>
     )
 }

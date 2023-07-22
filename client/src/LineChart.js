@@ -10,6 +10,10 @@ function Chart(props) {
         setLines(props.lines);
     }, [props.data]);
 
+    useEffect(() => {
+        setLines(props.lines);
+    }, [props.lines]);
+
 
     return (
         <div style={{ backgroundColor: 'white' }}>

@@ -4,12 +4,13 @@
   --blue: #1f8fff;
   --red: #E2002B;
   --grey: #595457;
+  --black: #000000;
 }
 
 body {
   margin: 0 !important;
   font-family: 'Roboto Mono', monospace;
-  background-image: url("../images/backgoround2.png");
+  background-image: url("../images/UKK_BG.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -22,23 +23,11 @@ body {
   height: 100vh;
 }
 
-footer {
-  position: relative;
-  display: flex;
-  margin-top: 3.66vh;
-  padding: 3.66vh 0;
-  height: 11vh;
-  width: 100%;
-  background-color: var(--blue);
-  bottom: 0;
-}
-
-footer div {
+.overlay {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 0.33em;
   margin: auto;
-}
-
-footer p {
-  margin: 1.2vh 0;
+  box-shadow: 0px 0px 21px 10px var(--black);
 }
 
 h1 {
@@ -49,4 +38,15 @@ h1 {
   width: '100%';
   background-color: var(--grey);
   margin-bottom: 1em;
+}
+
+#navbar-content>* {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+section {
+  width: 66% !important;
+  margin-top: 2em !important;
+  margin-bottom: 2em !important;
 }

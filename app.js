@@ -4,6 +4,8 @@
 /*     Import dependencies       */
 /*===============================*/
 import dotenv from 'dotenv';
+dotenv.config();
+
 import express from 'express';
 import session from 'express-session';
 import cors from 'cors';
@@ -19,8 +21,8 @@ import apiRouter from './Routes/apiRoutes.js';
     /*===============================*/
     /*     Configure environment     */
     /*===============================*/
-    dotenv.config();
     const app = express();
+    app.use(express.static('Public'))
 
     const sslkey = fs.readFileSync(process.env.KEY_PATH, 'utf8');
     const sslcert = fs.readFileSync(process.env.SERT_PATH, 'utf8');

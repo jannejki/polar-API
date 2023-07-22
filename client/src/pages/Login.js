@@ -69,27 +69,26 @@ function Login() {
     }
 
     return (
-        <div className='App' style={{ display: 'flex' }} >
-            <div className='overlay'>
-                <div className='login'>
-                    <h1 style={{ margin: 'auto' }}>polar API</h1>
-                    {errMsg ? <p className='errMsg' ref={errRef} tabIndex='-2' style={{ color: 'red' }}>{errMsg}</p> : null}
-                    {process.env.NODE_ENV === 'development' ? <button onClick={devLogin}>Dev log in</button> : null}
-                    <div className='buttonDiv'>
-                        <a href={polarAuthLink}>
-                            <LoadingButton
-                                onClick={handleClick}
-                                loading={loading}
-                                loadingIndicator=<span style={{ color: 'white' }}>Redirecting... <CircularProgress size={16} /> </span>
-                                variant="contained"
-                            >
-                                <span>Log in with Polar account</span>
-                            </LoadingButton>
-                        </a>
-                        <a href='/polar-API/about'><Button variant="contained">About</Button></a>
-                        <a href='https://github.com/jannejki/polar-API'><Button variant="contained">Repository<GitHubIcon></GitHubIcon></Button></a>
-                    </div>
-                </div>
+        <div className='d-flex m-auto' style={{ display: 'flex' }} >
+            <div className='container overlay'>
+                <h1 style={{ margin: 'auto' }}>polar API</h1>
+                {errMsg ? <p className='errMsg' ref={errRef} tabIndex='-2' style={{ color: 'red' }}>{errMsg}</p> : null}
+
+                <a className='row btnDiv' href={polarAuthLink} >
+                    <LoadingButton
+                        onClick={handleClick}
+                        loading={loading}
+                        loadingIndicator=<span style={{ color: 'white' }}>Redirecting... <CircularProgress size={16} /> </span>
+                        variant="contained"
+                    >
+                        <span>Log in with Polar account</span>
+                    </LoadingButton>
+                </a>
+
+
+                <a className='row btnDiv' href='/polar-API/about'><Button variant="contained">About</Button></a>
+                <a className='row btnDiv' href='https://github.com/jannejki/polar-API'><Button variant="contained">Repository<GitHubIcon></GitHubIcon></Button></a>
+
             </div>
         </div>
     )
