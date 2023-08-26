@@ -53,6 +53,9 @@ const Navigation = () => {
                                 </ul>
                             </li>
                             <li className="nav-item">
+                                <a className="nav-link" href="#/settings">Settings</a>
+                            </li>
+                            <li className="nav-item">
                                 <Button className='btn btn-success' onClick={logout} variant="contained" color="error"><LogoutIcon /></Button>
                             </li>
                         </ul>

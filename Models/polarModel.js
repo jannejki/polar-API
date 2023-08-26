@@ -7,7 +7,6 @@ import fetch from 'node-fetch';
 const polarModel = {
 
     getAccessToken: async (authToken) => {
-
         const inputBody = {
             'grant_type': 'authorization_code',
             'code': authToken,

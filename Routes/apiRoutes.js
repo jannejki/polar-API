@@ -12,5 +12,4 @@ apiRouter.get('/', polarController.index);
 apiRouter.get('/nightlyRecharge', checkAuthentication, polarController.nightlyRecharge);
 apiRouter.get('/cardioload', checkAuthentication, polarController.cardioLoad);
 
-
 export default apiRouter;

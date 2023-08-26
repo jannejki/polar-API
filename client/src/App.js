@@ -15,6 +15,7 @@ import CardioLoad from "./pages/CardioLoad";
 
 import Oauth_CB from "./components/Oauth_CB";
 import useAuth from "./hooks/useAuth";
+import Settings from "./pages/Settings";
 
 function App() {
   const { polarLogin } = useAuth();
@@ -45,6 +46,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/NightlyRecharge" element={<NightlyRecharge />} />
           <Route path="/cardioload" element={<CardioLoad />} />
+          <Route path="/Settings" element={<Settings />} />
         </Route>
 
         {/* catch all */}

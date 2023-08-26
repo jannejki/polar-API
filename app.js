@@ -52,7 +52,7 @@ import apiRouter from './Routes/apiRoutes.js';
         /*===============================*/
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
-        app.use(logger);
+       // app.use(logger);
         
         app.use(session({
             secret: 'secret',

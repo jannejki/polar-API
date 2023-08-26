@@ -1,5 +1,6 @@
 import polarModel from "../Models/polarModel.js";
 import tokenModel from "../Models/tokenModel.js";
+import userModel from "../Models/userModel.js";
 import JWT from "../Utils/jwtCreator.js";
 
 const authController = {
@@ -14,11 +15,11 @@ const authController = {
             if (accessObject) {
                 accessObject.expire_date = tokenModel.generateExpireDate(accessObject);
                 await tokenModel.saveToken(accessObject);
-
                 req.session.user = accessObject.x_user_id;
-
+                
                 // create a jwt token and send it to the client
                 const token = await JWT.create({ x_user_id: accessObject.x_user_id });
+                const userInfo = await userModel.saveJWT(token, accessObject.x_user_id);
                 res.cookie('token', token, {
                     httpOnly: true,
                     sameSite: 'none',
