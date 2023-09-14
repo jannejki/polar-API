@@ -66,7 +66,7 @@ import apiRouter from './Routes/apiRoutes.js';
         }))
 
         app.use(cors({
-            origin: whitelist,
+            origin: '*',
 
             credentials: true
         }));
