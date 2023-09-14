@@ -22,7 +22,7 @@ import apiRouter from './Routes/apiRoutes.js';
     /*     Configure environment     */
     /*===============================*/
     const app = express();
-    app.use(express.static('Public'))
+    app.use(express.static('./client/build'))
 
     const sslkey = fs.readFileSync(process.env.KEY_PATH, 'utf8');
     const sslcert = fs.readFileSync(process.env.SERT_PATH, 'utf8');
@@ -52,7 +52,7 @@ import apiRouter from './Routes/apiRoutes.js';
         /*===============================*/
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
-       // app.use(logger);
+        app.use(logger);
         
         app.use(session({
             secret: 'secret',
@@ -73,7 +73,7 @@ import apiRouter from './Routes/apiRoutes.js';
         
 
         /* Routes */
-        app.use('/web', webRouter);
+        app.use('/', webRouter);
         app.use('/api', apiRouter);
 
         /* Handle 404 requests */
@@ -98,8 +98,7 @@ import apiRouter from './Routes/apiRoutes.js';
                 https.createServer(options, app).listen(HTTPS_PORT, () => console.log('HTTPS server running on port ' + HTTPS_PORT));
 
                 http.createServer((req, res) => {
-                    console.log('http request');
-                    const redirectUrl = `https://${DOMAIN_NAME}:${HTTPS_PORT}${req.url}`;
+                    const redirectUrl = `https://${DOMAIN_NAME}:${HTTPS_PORT}/${req.url}`;
 
                     res.writeHead(301, { 'Location': redirectUrl });
                     res.end();

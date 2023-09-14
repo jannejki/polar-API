@@ -7,7 +7,7 @@ import tokenModel from '../Models/tokenModel.js';
 
 const webController = {
     index: (req, res) => {
-        res.send('index');
+        res.sendFile('index.html', { root: './client/build' });
     },
 };
 

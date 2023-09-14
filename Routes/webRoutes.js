@@ -9,19 +9,18 @@ import userController from '../Controllers/userController.js';
 /* Initialize required variables */
 const webRouter = express.Router();
 
-/* API Routes */
 webRouter.get('/', webController.index);
 
 /* Authentication routes */
-webRouter.get('/oauth2_callback', authController.oauthCallback);
-webRouter.post('/login', authController.login)
-webRouter.get('/auth', authController.auth);
-webRouter.get('/logout', authController.logout);
+webRouter.get('/web/oauth2_callback', authController.oauthCallback);
+webRouter.post('/web/login', authController.login)
+webRouter.get('/web/auth', authController.auth);
+webRouter.get('/web/logout', authController.logout);
 
 
-webRouter.get('/user/', checkAuthentication, userController.getUser);
-webRouter.get('/user/settings', checkAuthentication, userController.getSettings);
-webRouter.post('/user/settings', checkAuthentication, userController.saveSettings);
+webRouter.get('/web/user/', checkAuthentication, userController.getUser);
+webRouter.get('/web/user/settings', checkAuthentication, userController.getSettings);
+webRouter.post('/web/user/settings', checkAuthentication, userController.saveSettings);
 
 /* This is for the SSL certificate */
 /*

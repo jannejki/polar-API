@@ -8,3 +8,5 @@ IP_ADDRESSES.txt
 /logs
 Public/.well-known/pki-validation/B204B7CACD2ABB5C6CFE4F9A8564914E.txt
 client/.env
+client/.env
+client/.env
